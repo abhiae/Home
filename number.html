@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Sorter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+
+        #container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: calc(100% - 16px);
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3c903b;
+        }
+
+        input[type="text"][readonly] {
+            background-color: #f2f2f2;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>Number Sorter</h2>
+
+        <label for="inputNumbers">Enter numbers (comma-separated):</label>
+        <input type="text" id="inputNumbers" placeholder="e.g., 5, 2, 8, 1">
+
+        <br>
+
+        <button onclick="sortNumbers()">Sort</button>
+
+        <br>
+
+        <label for="sortedNumbers">Sorted Numbers:</label>
+        <input type="text" id="sortedNumbers" readonly>
+
+        <br>
+
+        <button onclick="copyToClipboard()">Copy</button>
+    </div>
+
+    <script>
+        function sortNumbers() {
+            var inputElement = document.getElementById("inputNumbers");
+            var sortedNumbersElement = document.getElementById("sortedNumbers");
+
+            // Get the input numbers and split them into an array
+            var inputNumbers = inputElement.value.split(',').map(function(num) {
+                return parseFloat(num);
+            });
+
+            // Remove any NaN values from the array
+            inputNumbers = inputNumbers.filter(function(num) {
+                return !isNaN(num);
+            });
+
+            // Sort the numbers in ascending order
+            var sortedNumbers = inputNumbers.sort(function(a, b) {
+                return a - b;
+            });
+
+            // Display the sorted numbers in the output element
+            sortedNumbersElement.value = sortedNumbers.join(', ');
+        }
+
+        function copyToClipboard() {
+            var sortedNumbersElement = document.getElementById("sortedNumbers");
+
+            // Select the text in the output element
+            sortedNumbersElement.select();
+            sortedNumbersElement.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the selected text to the clipboard
+            document.execCommand("copy");
+
+            // Alert the user that the text has been copied
+            alert("Sorted numbers copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
