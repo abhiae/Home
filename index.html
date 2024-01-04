@@ -10,7 +10,38 @@
 </head>
 <body>
     <h1><a href="number.html">Number Sorting</a></h1>
-    <p><span>Jokes kek.</span></p>
+    <!-- <p><span id="jokePlaceholder">Loading joke...</span></p> -->
     <a href="mailto:contact@abhinavjaishi.com.np">Mail Me!</a>
+
+    <div id="jokeContainer">
+        <h2 id="jokeTitle">Bad Jokes</h2>
+        <p><span id="jokePlaceholder">Loading joke...</span></p>
+    </div>
+
+    <script>
+        async function fetchRandomJoke() {
+            try {
+                const response = await fetch('https://v2.jokeapi.dev/joke/Any?type=single');
+                const data = await response.json();
+
+                if (data.type === 'single') {
+                    return data.joke;
+                } else {
+                    return `${data.setup} ${data.delivery}`;
+                }
+            } catch (error) {
+                console.error('Error fetching joke:', error.message);
+                return 'Failed to fetch joke.';
+            }
+        }
+
+        async function displayRandomJoke() {
+            const jokePlaceholder = document.getElementById('jokePlaceholder');
+            jokePlaceholder.textContent = await fetchRandomJoke();
+        }
+
+        displayRandomJoke(); // Initial joke for the main section
+        displayRandomJoke(); // Initial joke for the "Bad Jokes" section
+    </script>
 </body>
 </html>
