@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,6 +61,7 @@
         }
     </style>
 </head>
+
 <body>
     <div id="container">
         <h2>Number Sorter</h2>
@@ -77,8 +79,13 @@
         <input type="text" id="sortedNumbers" readonly>
 
         <br>
-
         <button onclick="copyToClipboard()">Copy</button>
+
+        <label for="count">Count:</label>
+        <input type="text" id="count" readonly>
+
+        <br>
+
     </div>
 
     <script>
@@ -87,27 +94,32 @@
                 sortNumbers();
             }
         }
+
         function sortNumbers() {
             var inputElement = document.getElementById("inputNumbers");
             var sortedNumbersElement = document.getElementById("sortedNumbers");
+            var countElement = document.getElementById("count");
 
             // Get the input numbers and split them into an array
-            var inputNumbers = inputElement.value.split(',').map(function(num) {
+            var inputNumbers = inputElement.value.split(',').map(function (num) {
                 return parseFloat(num);
             });
 
             // Remove any NaN values from the array
-            inputNumbers = inputNumbers.filter(function(num) {
+            inputNumbers = inputNumbers.filter(function (num) {
                 return !isNaN(num);
             });
 
             // Sort the numbers in ascending order
-            var sortedNumbers = inputNumbers.sort(function(a, b) {
+            var sortedNumbers = inputNumbers.sort(function (a, b) {
                 return a - b;
             });
 
             // Display the sorted numbers in the output element
             sortedNumbersElement.value = sortedNumbers.join(', ');
+
+            // Display the count of numbers
+            countElement.value = inputNumbers.length;
         }
 
         function copyToClipboard() {
@@ -125,4 +137,5 @@
         }
     </script>
 </body>
+
 </html>
